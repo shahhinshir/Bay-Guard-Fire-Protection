@@ -7,7 +7,7 @@ company serving the San Francisco Bay Area.
 
 - **Next.js 15** (App Router) · **React 19** · **TypeScript** (strict)
 - **Tailwind CSS v4** (CSS-first config in `src/app/globals.css`)
-- **EmailJS** for the contact form (swap-in point for Resend later)
+- **Resend** for the contact form (`POST /api/contact`)
 - **Vercel Analytics + Speed Insights** and **Google Ads** (gtag)
 - Deployed on **Vercel**
 
@@ -47,8 +47,8 @@ src/
   derive from it; `metadataBase` is set once in `src/app/layout.tsx`.
 - **Google Search Console** — set `GOOGLE_SITE_VERIFICATION` in the environment
   to emit the verification meta tag.
-- **Contact form** — EmailJS credentials live in `SITE.emailjs`. To move to
-  Resend, replace the `sendForm` call in `src/components/sections/ContactForm.tsx`
-  with a POST to a route handler; the markup stays the same.
+- **Contact form** — submissions post to `src/app/api/contact/route.ts`, which
+  sends through Resend. Set `RESEND_API_KEY` in the environment (local and Vercel).
+  The sending domain `bayguardfireprotection.com` must stay verified in Resend.
 - **Canonical host** — the apex domain 301-redirects to `www` via
   `next.config.ts` (also set this in Vercel → Domains).

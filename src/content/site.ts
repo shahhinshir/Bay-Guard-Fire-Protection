@@ -55,11 +55,6 @@ export const SITE = {
     googleAdsId: "AW-10808147810",
     conversionLabel: "AW-10808147810/eEW7CKnPiecDEOL-3KEo",
   },
-  emailjs: {
-    serviceId: "service_bayguard",
-    templateId: "bayguardfireprotection",
-    publicKey: "a6bfEA_PfsKHzEnj2",
-  },
 } as const;
 
 /** Build an absolute URL from a root-relative path. */

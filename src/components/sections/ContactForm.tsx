@@ -1,12 +1,7 @@
 "use client";
 
-// Client component: form state + EmailJS submission.
-// (EmailJS is intentionally kept as-is; a Resend-based handler can replace
-//  `sendForm` later without touching the markup.)
-
-import emailjs from "@emailjs/browser";
 import { useRouter } from "next/navigation";
-import { useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { SITE } from "@/content/site";
@@ -25,7 +20,6 @@ const fieldClass = (hasError: boolean) =>
 const labelClass = "block text-sm font-medium text-ink";
 
 export function ContactForm() {
-  const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -47,36 +41,43 @@ export function ContactForm() {
     return Object.keys(next).length === 0;
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError(false);
-    const form = formRef.current;
-    if (!form || !validate(form)) return;
+    const form = event.currentTarget;
+    if (!validate(form)) return;
 
+    const data = new FormData(form);
     setSubmitting(true);
-    emailjs
-      .sendForm(
-        SITE.emailjs.serviceId,
-        SITE.emailjs.templateId,
-        form,
-        SITE.emailjs.publicKey,
-      )
-      .then(
-        () => {
-          window.gtag?.("event", "conversion", {
-            send_to: SITE.analytics.conversionLabel,
-          });
-          router.push("/thank-you");
-        },
-        () => {
-          setSubmitError(true);
-          setSubmitting(false);
-        },
-      );
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: data.get("first-name"),
+          lastName: data.get("last-name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          subject: data.get("subject"),
+          message: data.get("message"),
+        }),
+      });
+
+      if (!response.ok) throw new Error("send failed");
+
+      window.gtag?.("event", "conversion", {
+        send_to: SITE.analytics.conversionLabel,
+      });
+      router.push("/thank-you");
+    } catch {
+      setSubmitError(true);
+      setSubmitting(false);
+    }
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate className="grid gap-5">
+    <form onSubmit={handleSubmit} noValidate className="grid gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="first-name" className={labelClass}>

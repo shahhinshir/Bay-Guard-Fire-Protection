@@ -15,7 +15,7 @@ const ContentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://api.emailjs.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://vitals.vercel-insights.com",
+  "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://vitals.vercel-insights.com",
   "frame-src https://td.doubleclick.net https://www.googletagmanager.com",
   "base-uri 'self'",
   "form-action 'self'",
