@@ -19,13 +19,22 @@ const variants = {
   ghost: "text-ink-soft hover:text-ink hover:bg-zinc-100",
 } as const;
 
-type Variant = keyof typeof variants;
-type Size = keyof typeof sizes;
+export type ButtonVariant = keyof typeof variants;
+export type ButtonSize = keyof typeof sizes;
+
+/** Shared class string for button-styled elements (buttons, links, anchors). */
+export function buttonClasses(
+  variant: ButtonVariant = "primary",
+  size: ButtonSize = "md",
+  className?: string,
+) {
+  return cn(base, sizes[size], variants[variant], className);
+}
 
 type ButtonAsLink = {
   href: string;
-  variant?: Variant;
-  size?: Size;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   className?: string;
   children: ReactNode;
 } & Omit<ComponentProps<typeof Link>, "href" | "className" | "children">;
@@ -39,19 +48,15 @@ export function ButtonLink({
   ...rest
 }: ButtonAsLink) {
   return (
-    <Link
-      href={href}
-      className={cn(base, sizes[size], variants[variant], className)}
-      {...rest}
-    >
+    <Link href={href} className={buttonClasses(variant, size, className)} {...rest}>
       {children}
     </Link>
   );
 }
 
 type ButtonProps = {
-  variant?: Variant;
-  size?: Size;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 } & ComponentProps<"button">;
 
 export function Button({
@@ -62,10 +67,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <button
-      className={cn(base, sizes[size], variants[variant], className)}
-      {...rest}
-    >
+    <button className={buttonClasses(variant, size, className)} {...rest}>
       {children}
     </button>
   );

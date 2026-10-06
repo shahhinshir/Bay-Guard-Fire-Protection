@@ -53,7 +53,18 @@ export const SITE = {
   ],
   analytics: {
     googleAdsId: "AW-10808147810",
+    /** Conversion fired on contact-form success. */
     conversionLabel: "AW-10808147810/eEW7CKnPiecDEOL-3KEo",
+    /**
+     * Phone-call conversion label ("AW-XXXXXXXXXX/XXXXXXXXXXXXXXXXX").
+     * Create a "Calls to a number on your website" conversion action in
+     * Google Ads, then paste its send-to value here. When set, the site
+     * (a) swaps the displayed number for a Google forwarding number for
+     * ad visitors and (b) counts taps on the click-to-call buttons as
+     * conversions. Leave empty until the action exists. See the Google
+     * Ads playbook, Part 3.2.
+     */
+    callConversionLabel: "",
   },
 } as const;
 

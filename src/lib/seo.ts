@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { Graph } from "schema-dts";
+import type { FAQPage, Graph, Service, WithContext } from "schema-dts";
 
 import { SITE, absoluteUrl } from "@/content/site";
 
@@ -137,10 +137,56 @@ export function siteJsonLd(page: {
   };
 }
 
+/* ---------------------------------------------------------------- *
+ * Service structured data. Links the offering to the LocalBusiness
+ * as its provider so Google ties the service to the verified entity.
+ * ---------------------------------------------------------------- */
+export function serviceJsonLd(input: {
+  name: string;
+  description: string;
+  /** Root-relative path, e.g. "/services/fire-extinguishers". */
+  path: string;
+  /** schema.org serviceType; defaults to `name`. */
+  serviceType?: string;
+  /** Cities served; defaults to the site-wide list. */
+  areaServed?: readonly string[];
+}): WithContext<Service> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: input.name,
+    description: input.description,
+    serviceType: input.serviceType ?? input.name,
+    url: absoluteUrl(input.path),
+    provider: { "@id": BUSINESS_ID },
+    areaServed: (input.areaServed ?? SITE.cities).map((name) => ({
+      "@type": "City",
+      name,
+    })),
+  };
+}
+
+/* ---------------------------------------------------------------- *
+ * FAQ structured data — eligible for FAQ rich results in search.
+ * ---------------------------------------------------------------- */
+export function faqPageJsonLd(
+  items: readonly { question: string; answer: string }[],
+): WithContext<FAQPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+}
+
 /**
  * Render JSON-LD safely inside a <script> tag.
  * Escapes `<` so the payload can never break out of the script element.
  */
-export function jsonLdScript(data: Graph): string {
+export function jsonLdScript(data: object): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }

@@ -7,9 +7,10 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import { PageHeader } from "@/components/sections/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
+import { CallButton } from "@/components/ui/CallButton";
 import { Container } from "@/components/ui/Container";
 import { ArrowRightIcon, CheckIcon } from "@/components/ui/icons";
-import { JsonLd } from "@/components/ui/JsonLd";
+import { JsonLd, ServiceJsonLd } from "@/components/ui/JsonLd";
 import { serviceDetails, services, type ServiceKey } from "@/content/content";
 import { pageMetadata } from "@/lib/seo";
 
@@ -64,12 +65,18 @@ export default async function ServiceDetailPage({
         name={`${detail.metaTitle} | Bay Guard Fire Protection`}
         description={detail.metaDescription}
       />
+      <ServiceJsonLd
+        name={detail.title}
+        description={detail.metaDescription}
+        path={`/services/${detail.key}`}
+      />
 
       <PageHeader eyebrow={detail.eyebrow} title={detail.title} description={detail.intro}>
         <ButtonLink href="/contact" size="lg">
           Get a free quote
           <ArrowRightIcon className="h-4 w-4" width={16} height={16} />
         </ButtonLink>
+        <CallButton />
       </PageHeader>
 
       {/* Hero image */}

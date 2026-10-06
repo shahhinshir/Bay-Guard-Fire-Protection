@@ -12,7 +12,15 @@ import { SITE } from "@/content/site";
  *   loaded lazily by their own components.
  */
 export function SiteAnalytics() {
-  const { googleAdsId } = SITE.analytics;
+  const { googleAdsId, callConversionLabel } = SITE.analytics;
+
+  // When a website phone-call conversion label is configured, Google swaps
+  // the displayed number for a forwarding number for ad visitors and counts
+  // the resulting calls. No-op until the label is set (see playbook Part 3.2).
+  const callConfig = callConversionLabel
+    ? `
+gtag('config', '${callConversionLabel}', { 'phone_conversion_number': '${SITE.phone.display}' });`
+    : "";
 
   return (
     <>
@@ -24,7 +32,7 @@ export function SiteAnalytics() {
         {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '${googleAdsId}');`}
+gtag('config', '${googleAdsId}');${callConfig}`}
       </Script>
       <VercelAnalytics />
       <SpeedInsights />

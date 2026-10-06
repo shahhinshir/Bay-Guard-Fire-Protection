@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { services } from "@/content/content";
+import { locationServices, services } from "@/content/content";
 import { absoluteUrl } from "@/content/site";
 
 // changeFrequency/priority are intentionally omitted — Google ignores them.
@@ -16,8 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const servicePaths = services.map((service) => service.href);
+  const landingPaths = locationServices.map((entry) => `/${entry.slug}`);
 
-  return [...staticPaths, ...servicePaths].map((path) => ({
+  return [...staticPaths, ...servicePaths, ...landingPaths].map((path) => ({
     url: absoluteUrl(path),
     lastModified,
   }));

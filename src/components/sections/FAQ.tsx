@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/site/Reveal";
 import { Container } from "@/components/ui/Container";
+import { FaqJsonLd } from "@/components/ui/JsonLd";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { faqs } from "@/content/content";
 
@@ -8,6 +9,7 @@ import { faqs } from "@/content/content";
 export function FAQ() {
   return (
     <section aria-labelledby="faq-heading" className="py-20 sm:py-24">
+      <FaqJsonLd faqs={faqs} />
       <Container>
         <SectionHeading
           id="faq-heading"

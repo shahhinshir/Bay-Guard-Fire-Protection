@@ -375,3 +375,313 @@ export const locations = {
   image: location,
   imageAlt: "Map of the San Francisco Bay Area cities we serve",
 };
+
+/* ---------------------------------------------------------------- *
+ * Location × service landing pages
+ * ----------------------------------------------------------------
+ * Root-relative SEO landing pages that intersect one service with one
+ * city (e.g. /oakland-commercial-fire-sprinklers). Each carries unique,
+ * localized copy so it ranks for "[service] in [city]" searches without
+ * duplicating the generic service pages. Rendered by `app/[locationService]`.
+ * ---------------------------------------------------------------- */
+export type LocationService = {
+  /** Root-relative slug, no leading slash. */
+  slug: string;
+  /** Links back to the matching service for imagery + cross-linking. */
+  serviceKey: ServiceKey;
+  city: string;
+  eyebrow: string;
+  h1: string;
+  metaTitle: string;
+  metaDescription: string;
+  /** Shown as the hero description. */
+  intro: string;
+  body: { heading: string; paragraphs: string[] };
+  highlights: { heading: string; items: string[] };
+  neighborhoods: string[];
+  /** Localized Q&A — also emitted as FAQPage structured data. */
+  faqs: Faq[];
+};
+
+export const locationServices: LocationService[] = [
+  {
+    slug: "oakland-commercial-fire-sprinklers",
+    serviceKey: "fire-sprinkler-system",
+    city: "Oakland",
+    eyebrow: "Oakland · Fire sprinklers",
+    h1: "Commercial Fire Sprinkler Service in Oakland",
+    metaTitle: "Oakland Commercial Fire Sprinkler Inspection & Repair",
+    metaDescription:
+      "Commercial fire sprinkler inspection, testing, and repair in Oakland, CA. Licensed C-16 contractor, fast local response, and free quotes. Call Bay Guard.",
+    intro:
+      "Keep your Oakland commercial property code-compliant with fast, licensed fire sprinkler inspection, testing, and repair — without the corporate wait times.",
+    body: {
+      heading: "Oakland's local fire sprinkler specialists",
+      paragraphs: [
+        "Oakland property managers and building owners are responsible for keeping fire sprinkler systems tested and tagged under California Code of Regulations Title 19 and NFPA 25. Lapsed inspections are one of the most common citations the Oakland Fire Department issues during annual permit reviews — and they can hold up a lease, a sale, or a certificate of occupancy.",
+        "Bay Guard is a locally based C-16 licensed fire sprinkler contractor (CSLB #1085623). Because we work out of the East Bay, we can usually reach Oakland sites faster than the large corporate firms, whether you need an annual inspection, five-year internal testing, a sprinkler-head relocation for a tenant improvement, or an emergency leak repair.",
+        "We handle wet-pipe, dry-pipe, deluge, and pre-action systems across warehouses, multi-tenant offices, retail, and multifamily buildings throughout Oakland — and we hand you the signed documentation your insurer and the fire marshal need.",
+      ],
+    },
+    highlights: {
+      heading: "What we cover in Oakland",
+      items: [
+        "Annual Title-19 / NFPA 25 sprinkler inspection and certification",
+        "Five-year internal pipe inspection and testing",
+        "Sprinkler leak and low-pressure emergency repair",
+        "Sprinkler-head relocation for tenant improvements",
+        "Backflow and riser inspection coordination",
+        "Signed documentation for insurers and the fire marshal",
+      ],
+    },
+    neighborhoods: [
+      "Downtown Oakland",
+      "Jack London Square",
+      "Fruitvale",
+      "Rockridge",
+      "Temescal",
+      "West Oakland",
+    ],
+    faqs: [
+      {
+        question: "How often does Oakland require a commercial fire sprinkler inspection?",
+        answer:
+          "Under California Title 19 and NFPA 25, commercial wet-pipe sprinkler systems need a licensed inspection at least annually, with additional quarterly checks of gauges and valves and a full internal inspection every five years. Bay Guard tracks your due dates so you never miss one.",
+      },
+      {
+        question: "Can you repair a leaking fire sprinkler quickly in Oakland?",
+        answer:
+          "Yes. We offer fast local and 24/7 emergency response for sprinkler leaks, broken heads, and low-pressure alarms across Oakland. Call (408) 318-8636 and we will dispatch a technician.",
+      },
+      {
+        question: "Are you licensed to work on fire sprinklers in California?",
+        answer:
+          "Bay Guard holds a C-16 CSLB license (#1085623) and is bonded and insured, so our inspections and repairs are accepted by the Oakland Fire Department and your insurer.",
+      },
+    ],
+  },
+  {
+    slug: "berkeley-fire-sprinkler-inspection",
+    serviceKey: "fire-sprinkler-system",
+    city: "Berkeley",
+    eyebrow: "Berkeley · Fire sprinklers",
+    h1: "Fire Sprinkler Inspection in Berkeley",
+    metaTitle: "Berkeley Fire Sprinkler Inspection & Testing",
+    metaDescription:
+      "Licensed fire sprinkler inspection, testing, and repair in Berkeley, CA. Fast East Bay response, Title-19 compliant, free quotes. Call Bay Guard Fire Protection.",
+    intro:
+      "Annual and five-year fire sprinkler inspection and testing for Berkeley commercial and multifamily buildings — done fast, documented, and code-compliant.",
+    body: {
+      heading: "Berkeley fire sprinkler inspection you can schedule this week",
+      paragraphs: [
+        "Berkeley's mix of older commercial buildings, university-adjacent housing, and multi-tenant properties means a lot of sprinkler systems that need careful, on-time inspection. The City of Berkeley Fire Department enforces California Title 19 and NFPA 25, and a missed annual tag is an easy citation to avoid.",
+        "Bay Guard is an East Bay-based C-16 licensed contractor (CSLB #1085623), so we can get a technician to your Berkeley property quickly instead of routing you through a corporate scheduling queue. We inspect, test, tag, and repair wet, dry, and pre-action systems and give you the paperwork your insurer and the fire marshal expect.",
+        "Whether you manage a single storefront near Shattuck Avenue or a portfolio of apartment buildings, we keep your inspection schedule on track and flag small issues before they become expensive failures.",
+      ],
+    },
+    highlights: {
+      heading: "Berkeley sprinkler services",
+      items: [
+        "Annual fire sprinkler inspection, testing, and tagging",
+        "Five-year internal inspection per NFPA 25",
+        "Repairs, head replacement, and leak fixes",
+        "Deficiency correction and re-inspection",
+        "Tenant-improvement sprinkler modifications",
+        "Compliance documentation for owners and insurers",
+      ],
+    },
+    neighborhoods: [
+      "Downtown Berkeley",
+      "Shattuck Avenue",
+      "West Berkeley",
+      "Elmwood",
+      "North Berkeley",
+      "Telegraph Avenue",
+    ],
+    faqs: [
+      {
+        question: "Do you provide the inspection tag and report for Berkeley compliance?",
+        answer:
+          "Yes. After every inspection we tag the system and provide a signed NFPA 25 report you can submit to the Berkeley Fire Department and your insurance carrier.",
+      },
+      {
+        question: "How fast can you inspect my Berkeley building?",
+        answer:
+          "Because we are based in the East Bay, we can usually schedule a Berkeley inspection within the same week, and sooner for urgent compliance deadlines. Call (408) 318-8636.",
+      },
+      {
+        question: "What happens if my system fails inspection?",
+        answer:
+          "We document every deficiency, give you a clear repair quote, fix the issue, and re-inspect so your system passes and stays compliant.",
+      },
+    ],
+  },
+  {
+    slug: "east-bay-restaurant-fire-suppression",
+    serviceKey: "kitchen-fire-suppression",
+    city: "East Bay",
+    eyebrow: "East Bay · Kitchen suppression",
+    h1: "Restaurant Fire Suppression Systems in the East Bay",
+    metaTitle: "East Bay Restaurant Fire Suppression System Service",
+    metaDescription:
+      "UL-300 kitchen fire suppression installation, inspection, and repair for East Bay restaurants. Pass your health inspection. Fast local service. Call Bay Guard.",
+    intro:
+      "UL-300 compliant kitchen hood fire suppression installation, semiannual inspection, and repair for East Bay restaurants — so you pass inspection and stay open.",
+    body: {
+      heading: "Keep your East Bay kitchen compliant and open",
+      paragraphs: [
+        "Every commercial kitchen in the East Bay needs a UL-300 listed fire suppression system over the cooking line, inspected and certified twice a year. Fire marshals and county health inspectors across Alameda and Contra Costa counties check for a current service tag — and a failed or expired system can shut your kitchen down during your busiest service.",
+        "Bay Guard installs, inspects, services, and repairs commercial kitchen suppression systems — Ansul, Pyrochem, Range Guard, Kidde, Buckeye, and Amerex — protecting fryers, ranges, charbroilers, woks, hoods, ducts, and plenums. We are a licensed Automatic Extinguishing Systems contractor (#A019043) and we move fast because we are local.",
+        "From a single Oakland taqueria to a Walnut Creek hotel kitchen, we keep your semiannual schedule current, handle fusible-link replacement and nozzle repositioning after a remodel, and provide the tagged documentation your health inspector wants to see.",
+      ],
+    },
+    highlights: {
+      heading: "East Bay kitchen suppression services",
+      items: [
+        "UL-300 system installation for new and remodeled kitchens",
+        "Semiannual inspection and certification",
+        "Fusible-link and nozzle replacement",
+        "System recharge after discharge",
+        "Wet Class K extinguisher supply and service",
+        "Health-inspection-ready service tags and reports",
+      ],
+    },
+    neighborhoods: [
+      "Oakland",
+      "Berkeley",
+      "Emeryville",
+      "Alameda",
+      "Hayward",
+      "Walnut Creek",
+    ],
+    faqs: [
+      {
+        question: "How often must an East Bay restaurant suppression system be inspected?",
+        answer:
+          "UL-300 kitchen fire suppression systems require a licensed inspection every six months. Bay Guard tracks your due dates and tags the system so you stay compliant with the fire marshal and county health department.",
+      },
+      {
+        question: "Do you install systems for new restaurant build-outs?",
+        answer:
+          "Yes. We design and install UL-300 compliant suppression for new kitchens and tenant improvements, and we coordinate with your hood and the local fire authority for sign-off.",
+      },
+      {
+        question: "My system discharged — can you recharge it fast?",
+        answer:
+          "We provide fast and 24/7 emergency recharge and repair so you can reopen quickly. Call (408) 318-8636.",
+      },
+    ],
+  },
+  {
+    slug: "oakland-kitchen-fire-suppression",
+    serviceKey: "kitchen-fire-suppression",
+    city: "Oakland",
+    eyebrow: "Oakland · Kitchen suppression",
+    h1: "Kitchen Fire Suppression Service in Oakland",
+    metaTitle: "Oakland Kitchen Fire Suppression System Inspection",
+    metaDescription:
+      "UL-300 commercial kitchen fire suppression inspection, service, and installation in Oakland, CA. Pass your health inspection with Bay Guard. Call for a free quote.",
+    intro:
+      "Semiannual inspection, installation, and repair of UL-300 kitchen hood suppression systems for Oakland restaurants and commercial kitchens.",
+    body: {
+      heading: "Oakland restaurants trust Bay Guard for suppression",
+      paragraphs: [
+        "Oakland's restaurant scene runs on busy commercial kitchens — and every one of them needs a UL-300 listed suppression system over the cooking line, inspected and tagged every six months. The Oakland Fire Department and Alameda County environmental health both check for a current tag, and an expired system is a fast way to fail inspection.",
+        "Bay Guard services and certifies Ansul, Pyrochem, Range Guard, Kidde, Buckeye, and Amerex systems across Oakland — from Fruitvale and Jack London Square to Downtown and Temescal. As a local Automatic Extinguishing Systems contractor (#A019043), we schedule quickly and work around your service hours.",
+        "We cover fusible links, nozzles, cylinders, and the Wet Class K extinguisher that must accompany the system, and we leave you with the tagged documentation your inspector requires.",
+      ],
+    },
+    highlights: {
+      heading: "Oakland suppression services",
+      items: [
+        "Semiannual UL-300 inspection and certification",
+        "New system installation and remodel modifications",
+        "Fusible-link and nozzle replacement",
+        "Post-discharge recharge and repair",
+        "Wet Class K extinguisher service",
+        "Scheduling around your kitchen's hours",
+      ],
+    },
+    neighborhoods: [
+      "Downtown Oakland",
+      "Jack London Square",
+      "Fruitvale",
+      "Temescal",
+      "Chinatown",
+      "Lake Merritt",
+    ],
+    faqs: [
+      {
+        question: "Will Bay Guard's tag satisfy the Oakland health inspector?",
+        answer:
+          "Yes. We inspect to UL-300 standards, tag the system, and provide a signed report accepted by the Oakland Fire Department and Alameda County environmental health.",
+      },
+      {
+        question: "Can you service my system outside business hours?",
+        answer:
+          "We schedule around your kitchen so inspection and service don't interrupt your service. Call (408) 318-8636 to arrange a time.",
+      },
+      {
+        question: "Do I also need a fire extinguisher in my kitchen?",
+        answer:
+          "Yes — a Wet Class K portable extinguisher is required alongside the suppression system. We supply and service those too.",
+      },
+    ],
+  },
+  {
+    slug: "hayward-commercial-fire-extinguisher-service",
+    serviceKey: "fire-extinguishers",
+    city: "Hayward",
+    eyebrow: "Hayward · Fire extinguishers",
+    h1: "Commercial Fire Extinguisher Service in Hayward",
+    metaTitle: "Hayward Commercial Fire Extinguisher Inspection & Recharge",
+    metaDescription:
+      "Commercial fire extinguisher inspection, recharge, and certification in Hayward, CA. On-site annual service, same-week scheduling, free quotes. Call Bay Guard.",
+    intro:
+      "On-site annual inspection, recharge, and certification of commercial fire extinguishers for Hayward businesses — keeping you up to fire code.",
+    body: {
+      heading: "On-site extinguisher service for Hayward businesses",
+      paragraphs: [
+        "Every Hayward business is required to have its portable fire extinguishers inspected and certified annually by a licensed company, with monthly visual checks in between. The Hayward Fire Department looks for a current service tag during inspections, and an out-of-date or discharged extinguisher is an easy citation — and a real safety gap.",
+        "Bay Guard comes to your location to inspect, recharge, refill, and certify extinguishers for warehouses, offices, retail, and industrial sites throughout Hayward and the surrounding East Bay. We hold a Portable Fire Extinguisher license (#3756) and offer fast, same-week scheduling so you're never caught non-compliant.",
+        "We service ABC, Wet Class K, CO2, water, and Halotron clean-agent extinguishers, handle six-year maintenance and hydrostatic testing, and supply new units and cabinets at wholesale pricing when you need them.",
+      ],
+    },
+    highlights: {
+      heading: "Hayward extinguisher services",
+      items: [
+        "Annual on-site inspection and certification",
+        "Recharge, refill, and six-year maintenance",
+        "Hydrostatic testing",
+        "New extinguishers and cabinets at wholesale pricing",
+        "ABC, Wet Class K, CO2, water, and Halotron units",
+        "Same-week scheduling and tagged documentation",
+      ],
+    },
+    neighborhoods: [
+      "Downtown Hayward",
+      "Industrial Hayward",
+      "Southland",
+      "Mt. Eden",
+      "Jackson Triangle",
+      "Tennyson–Alquire",
+    ],
+    faqs: [
+      {
+        question: "How often do Hayward businesses need extinguisher service?",
+        answer:
+          "California fire code requires a licensed annual inspection and certification of every portable fire extinguisher, plus monthly visual checks by staff. Bay Guard handles the annual service on-site and tags each unit.",
+      },
+      {
+        question: "Do you come to our location in Hayward?",
+        answer:
+          "Yes — we service your extinguishers on-site across Hayward and the East Bay, usually within the same week. Call (408) 318-8636 to schedule.",
+      },
+      {
+        question: "Can you supply new extinguishers if some fail?",
+        answer:
+          "Yes. We sell new ABC, Wet Class K, CO2, and clean-agent extinguishers and cabinets at wholesale pricing and install them during the same visit.",
+      },
+    ],
+  },
+];
