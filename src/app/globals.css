@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Design tokens (Tailwind v4 CSS-first config). Light mode only.
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans:
+    var(--font-poppins), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+
+  /* Brand — fire red */
+  --color-brand-50: #fef2f2;
+  --color-brand-100: #fee2e2;
+  --color-brand-200: #fecaca;
+  --color-brand-300: #fca5a5;
+  --color-brand-400: #f87171;
+  --color-brand-500: #ef4444;
+  --color-brand-600: #dc2626;
+  --color-brand-700: #b91c1c;
+  --color-brand-800: #991b1b;
+  --color-brand-900: #7f1d1d;
+
+  /* Semantic surface + ink */
+  --color-canvas: #fbfbfc;
+  --color-ink: #0a0a0b;
+  --color-ink-soft: #3f3f46;
+  --color-ink-muted: #71717a;
+  --color-hairline: #ececef;
+
+  --shadow-soft: 0 1px 2px rgba(10, 10, 11, 0.04),
+    0 8px 24px -12px rgba(10, 10, 11, 0.12);
+  --shadow-lift: 0 1px 2px rgba(10, 10, 11, 0.05),
+    0 24px 48px -20px rgba(10, 10, 11, 0.18);
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand-600);
+  color: #fff;
+}
+
+/* Refined focus ring for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Thin, quiet scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d4d4d8 transparent;
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities
+ * ------------------------------------------------------------------ */
+
+/* Faint engineering grid — the Linear/Raycast backdrop */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(10, 10, 11, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 11, 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Even fainter dotted grid for hero backdrops */
+@utility bg-dots {
+  background-image: radial-gradient(
+    rgba(10, 10, 11, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+/* Gradient wordmark accent */
+@utility text-gradient {
+  background: linear-gradient(
+    92deg,
+    var(--color-brand-600),
+    var(--color-brand-800)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ------------------------------------------------------------------ *
+ * Scroll-reveal animation (progressive enhancement).
+ * CRITICAL: content is ALWAYS visible by default. It is never hidden
+ * with opacity:0 waiting for JS, so a failed observer, no JS, or a
+ * hydration error can never leave a section blank. When JS adds
+ * `.is-visible`, we simply replay a gentle one-shot entrance.
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal].is-visible {
+    animation: rise-in 0.6s var(--ease-out-soft) both;
+  }
+}
+
+/* Hero entrance on first paint */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-rise {
+  animation: rise-in 0.8s var(--ease-out-soft) both;
+}
+
+/* ------------------------------------------------------------------ *
+ * Marquee (CSS only — no JS, no dependency). Two rows, opposite dirs.
+ * The track is duplicated in markup so -50% is a seamless loop.
+ * ------------------------------------------------------------------ */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 48s linear infinite;
+}
+.marquee__track--reverse {
+  animation-name: marquee-right;
+}
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+/* ------------------------------------------------------------------ *
+ * Respect reduced-motion
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-rise {
+    animation: none;
+  }
+  .marquee__track {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
