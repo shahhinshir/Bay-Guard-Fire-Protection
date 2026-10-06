@@ -77,7 +77,13 @@ export function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="grid gap-5">
+    <form
+      action="/api/contact"
+      method="post"
+      onSubmit={handleSubmit}
+      noValidate
+      className="grid gap-5"
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="first-name" className={labelClass}>
