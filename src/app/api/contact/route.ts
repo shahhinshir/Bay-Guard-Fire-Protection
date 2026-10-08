@@ -3,12 +3,6 @@ import { Resend } from "resend";
 
 import { SITE } from "@/content/site";
 
-const RECIPIENTS = [
-  "shahhinshir@gmail.com",
-  "sh_bgfp@yahoo.com",
-  "Shahhin_68@yahoo.com",
-] as const;
-
 const FROM = `Bay Guard Fire Protection <${SITE.email}>`;
 
 const LIMITS = {
@@ -103,7 +97,7 @@ export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: FROM,
-    to: [...RECIPIENTS],
+    to: SITE.email,
     replyTo: email,
     subject: `Website enquiry: ${subject}`,
     text: [
